@@ -72,9 +72,12 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+GET '/categories/<int:category_id>/questions'
+POST '/questions'
+POST '/questions/search'
+POST '/quizzes'
+DELETE '/questions/<int:question_id>'
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -87,8 +90,162 @@ GET '/categories'
 '5' : "Entertainment",
 '6' : "Sports"}
 
-```
+GET '/questions'
+- Fetches a dictionary of questions paginated in gruops of 10 
+Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category.
+- Request Arguments: include a resquest argument to choose page number starting from 1
+- Returns: A list of questions objects, success value, total questions, categories, and current category
 
+http://127.0.0.1:5000/questions
+
+{
+  "categories": [
+    "Science", 
+    "Art", 
+    "Geography", 
+    "History", 
+    "Entertainment", 
+    "Sports"
+  ], 
+  "current_category": null, 
+  "questions": [
+    {
+      "answer": "Uruguay", 
+      "category": 6, 
+      "difficulty": 4, 
+      "id": 11, 
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    }, 
+    {
+      "answer": "George Washington Carver", 
+      "category": 4, 
+      "difficulty": 2, 
+      "id": 12, 
+      "question": "Who invented Peanut Butter?"
+    }, 
+    {
+      "answer": "Lake Victoria", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 13, 
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles", 
+      "category": 3, 
+      "difficulty": 3, 
+      "id": 14, 
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }, 
+    {
+      "answer": "Agra", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 15, 
+      "question": "The Taj Mahal is located in which Indian city?"
+    }, 
+    {
+      "answer": "Escher", 
+      "category": 2, 
+      "difficulty": 1, 
+      "id": 16, 
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    }, 
+    {
+      "answer": "Mona Lisa", 
+      "category": 2, 
+      "difficulty": 3, 
+      "id": 17, 
+      "question": "La Giaconda is better known as what?"
+    }, 
+    {
+      "answer": "One", 
+      "category": 2, 
+      "difficulty": 4, 
+      "id": 18, 
+      "question": "How many paintings did Van Gogh sell in his lifetime?"
+    }, 
+    {
+      "answer": "Jackson Pollock", 
+      "category": 2, 
+      "difficulty": 2, 
+      "id": 19, 
+      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+    }, 
+    {
+      "answer": "The Liver", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 20, 
+      "question": "What is the heaviest organ in the human body?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 15
+}
+
+GET '/categories/<int:category_id>/questions'
+- Fetches a dictionary of questions based on category
+- Request Arguments:  include a request argument to choose category of questions you wanna get back
+- Returns: success, list of questions, number of total questions for the current category, id of current category
+
+{
+  "current_category": 3, 
+  "questions": [
+    {
+      "answer": "Lake Victoria", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 13, 
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles", 
+      "category": 3, 
+      "difficulty": 3, 
+      "id": 14, 
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }, 
+    {
+      "answer": "Agra", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 15, 
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 3
+}
+
+POST '/questions'
+- Create a new question
+- Request Arguments: question, answer, category, difficulty
+- Returns: success, and the id of the created question
+
+{
+    'success': True,
+    'question_id_add': 1
+}
+
+POST '/questions/search'
+- Fetches  a dictionary of  all questions based  on a search item
+- Request Arguments: searchTerm
+- Returns: a list of questions object, and success.
+
+POST '/quizzes'
+- Fetches a random question based on category or not, to play the quizz
+- Request Arguments: previous_questions, quiz_category
+- Returns: success and a question object within answer, category and difficulty.
+
+DELETE '/questions/<int:question_id>'
+- Delete a question based on a given id
+- Request Argument: question_id
+- Returns: true if successfully deleted and question_id of the deleted question
+{
+    'success': True,
+    'question_id_add': 1
+}
 
 ## Testing
 To run the tests, run
